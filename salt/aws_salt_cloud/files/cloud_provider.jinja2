@@ -1,0 +1,23 @@
+{% set vpc_settings = salt['pillar.get']('mgmt_environment') %}
+
+
+mgmt_ec2:
+  driver: ec2
+  ssh_interface: public_ips
+  id: {{ vpc_settings.keyid }}
+  key: {{ vpc_settings.key }}
+  private_key: {{ vpc_settings.salt_master_private_key }}
+  keyname: {{ vpc_settings.aws_key_name }}
+  location: {{ vpc_settings.region }}
+  ssh_username: {{ vpc_settings.ssh_username }}
+
+
+mgmt_ec2_private:
+  driver: ec2
+  ssh_interface: private_ips
+  id: {{ vpc_settings.keyid }}
+  key: {{ vpc_settings.key }}
+  private_key: {{ vpc_settings.salt_master_private_key }}
+  keyname: {{ vpc_settings.aws_key_name }}
+  location: {{ vpc_settings.region }}
+  ssh_username: {{ vpc_settings.ssh_username }}

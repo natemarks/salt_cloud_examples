@@ -1,0 +1,111 @@
+{% set profile = salt['pillar.get']('mgmt_profile') %}
+
+{# Set global values that are used across environments #}
+{% set salt_master_code_commit_profile = 'arn:aws:iam::999999999999:instance-profile/Salt_Master_Code_Commit_Puller' %}
+{% set salt_master_code_commit_profile_name = 'Salt_Master_Code_Commit_Puller' %}
+{% set repo_manager_profile = 'arn:aws:iam::999999999999:instance-profile/Repo_Manager' %}
+{% set repo_manager_profile_name = 'Repo_Manager' %}
+{% set salt_master_private_key = '/etc/salt/salt_master_id_rsa' %}
+
+{% set vpc_settings = salt['pillar.get']('mgmt_environment') %}
+
+{# using Nate's personal credentials right now #}
+{% set key_id = 'AKEASOMEEXAMPLE' %}
+{% set key = 'aaaaaSOMEAUTHEWNTICATIONKEY' %}
+
+{% set ssh_username = 'centos' %}
+{% set aws_key_name = 'salt_master_id_rsa' %}
+
+{% set prod_route53_zone_id = 'SOME_ZONE_ID' %}
+
+{# trust the machines that run salt cloud so we can bootstrap the mgmt vpc hosts #}
+{# these two are the salt masters in the dev 'vpc, but they can be anything #}
+{% set salt_master = '999.999.999.999' %}
+
+{% set dev_red_salt_master_public_ip = '54.242.195.215' %}
+{% set dev_blue_salt_master_public_ip = '100.24.29.159' %}
+{% set mgmt_vpc_id = 'vpc-SOME_VPC_ID' %}
+{% set mgmt_vpc_owner_id = '999999999999' %}
+mgmt_environment:
+  vpc_cidr_block: "10.100.0.0/16"
+  vpc_cidr_prepend: "10.100."
+  salt_master_code_commit_profile: {{ salt_master_code_commit_profile }}
+  repo_manager_profile: {{ repo_manager_profile }}
+  region: us-east-1
+  keyid: {{ key_id }}
+  key: {{ key }}
+  profile:
+    region: us-east-1
+    keyid: {{ key_id }}
+    key: {{ key }}
+  red_availability_zone: us-east-1a
+  blue_availability_zone: us-east-1b
+  vpcEnvironment: "MGMT_VPC"
+  repo_ebs_volume_id: vol-999_some_vol_id
+  red_nat_gateway_eip_id: "eipalloc-999_eipalloc_id"
+  blue_nat_gateway_eip_id: "eipalloc-999_eipalloc_id"
+  blue_salt_master_public_eip: "eipalloc-999_eipalloc_id"
+  red_salt_master_public_eip: "eipalloc-999_eipalloc_id"
+  red_salt_master_private_fqdn: "red-salt-master.some_private_domain_name"
+  blue_salt_master_private_fqdn: "blue-salt-master.some_private_domain_name"
+  salt_master: {{ salt_master }}
+  ssh_username: {{ ssh_username }}
+  aws_key_name: {{ aws_key_name }}
+  dev_red_salt_master_public_ip: {{ dev_red_salt_master_public_ip }}
+  dev_blue_salt_master_public_ip: {{ dev_blue_salt_master_public_ip }}
+  centos_ami:
+    us-east-1: ami-9887c6e7
+    us-east-2: ami-9c0638f9
+    us-west-1: ami-4826c22b
+    us-west-2: ami-3ecc8f46
+  trusted_internet_ipv4_addresses:
+    - 9.9.9.0/24
+    - 1.1.1.1/32
+    - {{ dev_red_salt_master_public_ip }}/32
+    - {{ dev_blue_salt_master_public_ip }}/32
+  prod_route53_zone_id: {{ prod_route53_zone_id }}
+  private_domain: "some_private_domain_name."
+  public_domain: "some_public_domain_name."
+
+
+skunk_works_environment:
+  vpc_cidr_block: "10.200.0.0/16"
+  vpc_cidr_prepend: "10.200."
+  salt_master_code_commit_profile: {{ salt_master_code_commit_profile }}
+  repo_manager_profile: {{ repo_manager_profile }}
+  region: us-east-1
+  keyid: {{ key_id }}
+  key: {{ key }}
+  profile:
+    region: us-east-1
+    keyid: {{ key_id }}
+    key: {{ key }}
+  red_availability_zone: us-east-1a
+  blue_availability_zone: us-east-1b
+  vpcEnvironment: "MGMT_VPC"
+  repo_ebs_volume_id: vol-999_some_vol_id
+  red_nat_gateway_eip_id: "eipalloc-999_eipalloc_id"
+  blue_nat_gateway_eip_id: "eipalloc-999_eipalloc_id"
+  blue_salt_master_public_eip: "eipalloc-999_eipalloc_id"
+  red_salt_master_public_eip: "eipalloc-999_eipalloc_id"
+  red_salt_master_private_fqdn: "red-salt-master.some_private_domain_name"
+  blue_salt_master_private_fqdn: "blue-salt-master.some_private_domain_name"
+  salt_master: {{ salt_master }}
+  ssh_username: {{ ssh_username }}
+  aws_key_name: {{ aws_key_name }}
+  dev_red_salt_master_public_ip: {{ dev_red_salt_master_public_ip }}
+  dev_blue_salt_master_public_ip: {{ dev_blue_salt_master_public_ip }}
+  centos_ami:
+    us-east-1: ami-9887c6e7
+    us-east-2: ami-9c0638f9
+    us-west-1: ami-4826c22b
+    us-west-2: ami-3ecc8f46
+  trusted_internet_ipv4_addresses:
+    - 9.9.9.0/24
+    - 1.1.1.1/32
+    - {{ dev_red_salt_master_public_ip }}/32
+    - {{ dev_blue_salt_master_public_ip }}/32
+  prod_route53_zone_id: {{ prod_route53_zone_id }}
+  private_domain: "some_private_domain_name."
+  public_domain: "some_public_domain_name."
+

@@ -1,0 +1,7 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+aws:
+  pkg: aws
+  config: '/etc/aws'
+  service:
+    name: aws
