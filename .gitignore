@@ -73,3 +73,4 @@ fabric.properties
 
 credentials.sls
 vpc_data.sls
+create_iam_resources.sls
