@@ -13,8 +13,8 @@ create_red_repo_server_instance:
     - image: {{ vpc_settings.centos_ami[vpc_settings.region] }}
     - iam_profile: {{ vpc_settings.repo_manager_profile }}
     - block_device_mappings:
-      - device: /dev/xvdb
-        volume_id: {{ vpc_settings.repo_ebs_volume_id }}
+      - DeviceName: /dev/xvdb
+        VolumeName: {{ vpc_settings.repo_ebs_volume_id }}
     - tag:
         vpcEnvironment: {{ vpc_settings.vpcEnvironment }}
         az_side: red
