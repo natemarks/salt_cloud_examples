@@ -44,8 +44,8 @@ create public s3 repo access policy:
                         "s3:*"
                     ],
                     "Resource": [
-                        "arn:aws:s3:::repo.worstdomainever.net",
-                        "arn:aws:s3:::repo.worstdomainever.net/*"
+                        "arn:aws:s3:::repo.<SOMEDOMAIN>",
+                        "arn:aws:s3:::repo.<SOMEDOMAIN>/*"
                     ],
                     "Effect": "Allow"
                 }
@@ -73,8 +73,8 @@ kinesis to elasticsearch access policy:
                         "s3:*"
                     ],
                     "Resource": [
-                        "arn:aws:s3:::repo.worstdomainever.net",
-                        "arn:aws:s3:::repo.worstdomainever.net/*"
+                        "arn:aws:s3:::repo.<SOMEDOMAIN>",
+                        "arn:aws:s3:::repo.<SOMEDOMAIN>/*"
                     ],
                     "Effect": "Allow"
                 }
